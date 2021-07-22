@@ -51,32 +51,33 @@ vector<vector<int>> threeSum(vector<int> &nums, int target)
 }
 
 //SORTING + TWO POINTER : O(N^2) time + O(1) space --> MOST OPTIMIZED
-vector<vector<int>> threeSum(vector<int> &nums, int target)
-{
-    //O(NlogN)
-    sort(nums.begin(), nums.end());
-    vector<vector<int>> result;
-    //Bottleneck step : O(N^2) --> For each nums[i] we loop (O(N)) and follow the two pointer approach
-    for (int i = 0; i < nums.size(); i++)
-    {
-        int curr_sum = target - nums[i];
-        int ptr_front = i + 1;
-        int ptr_back = nums.size() - 1;
-        while (ptr_front < ptr_back)
+vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> result;
+        if(nums.size() < 3)
+            return result;
+        set<vector<int>> temp_result;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size();i++)
         {
-            if (nums[ptr_front] + nums[ptr_back] == curr_sum)
+            int curr_sum = 0 - nums[i];
+            int ptr_front = i + 1;
+            int ptr_back = nums.size() - 1;
+            while(ptr_front < ptr_back)
             {
-                result.push_back({nums[i], nums[ptr_front], nums[ptr_back]});
-            }
-            else if (nums[ptr_front] + nums[ptr_back] < target)
-            {
-                ptr_front++;
-            }
-            else
-            {
-                ptr_back--;
+                if(nums[ptr_back] + nums[ptr_front] == curr_sum){
+                    temp_result.insert({nums[i],nums[ptr_front],nums[ptr_back]});
+                    ptr_front++;
+                    ptr_back--;
+                }
+                else if(nums[ptr_back] + nums[ptr_front] > curr_sum)
+                    ptr_back--;
+                else
+                    ptr_front++;
             }
         }
+        for(auto x : temp_result)
+        {
+            result.push_back(x);
+        }
+        return result;
     }
-    return result;
-}
