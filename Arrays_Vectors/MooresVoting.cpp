@@ -1,5 +1,7 @@
 /*
 
+Boyer-Moore Voting Algorithm
+
 Finds the majority element in an array, i.e. an element which has occured more than arr.size/2 times (Hence, there is atmost one such element)
 
 */
